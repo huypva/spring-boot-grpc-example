@@ -9,7 +9,10 @@ The example project for StringBoot service
 ## Project structure
 ```
 .
-├── hello-world
+├── spring-boot-grpc-client
+│   ├── Dockerfile
+│   ...
+├── spring-boot-grpc-server
 │   ├── Dockerfile
 │   ...
 ├── docker-compose.yaml
@@ -27,12 +30,21 @@ The example project for StringBoot service
 ## Start project
 ### Start project in local
 
-- Install infrastructure
-
 - Build project
 ```shell script
 $ ./mvnw clean package
-$ cd hello-word
+```
+
+- Start server side
+```shell script
+$ cd spring-boot-grpc-server
+$ ../mvnw spring-boot:run
+...
+```
+
+- Start client side
+```shell script
+$ cd spring-boot-grpc-client
 $ ./mvnw spring-boot:run
 ...
 ```

@@ -1,9 +1,22 @@
 version: "3.4"
 services:
-  hello-world:
-    build: hello-world
-    container_name: 'hello-world'
+  spring-boot-grpc-client:
+    build: spring-boot-grpc-client
+    container_name: 'spring-boot-grpc-client'
     environment:
       - spring_profiles_active=docker
     ports:
       - 8081:8081
+    networks:
+      - spring-boot-grpc-network
+  spring-boot-grpc-server:
+    build: spring-boot-grpc-server
+    container_name: 'spring-boot-grpc-server'
+    environment:
+      - spring_profiles_active=docker
+    ports:
+      - 8082:8082
+    networks:
+      - spring-boot-grpc-network
+networks:
+  spring-boot-grpc-network:
