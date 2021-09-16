@@ -3,8 +3,8 @@ package io.codebyexample.springbootgrpcclient.core.usecase;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
-import io.codebyexample.springbootgrpcclient.dataprovider.id.RandomIdProvider;
+import io.codebyexample.springbootgrpcclient.core.entity.Message;
+import io.codebyexample.springbootgrpcclient.dataprovider.greeting.GreetingClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +16,22 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * @author huypva
  */
 @ExtendWith(SpringExtension.class)
-@Import(GreetUseCaseImpl.class)
-class GreetUseCaseImplTest {
+@Import(HelloWorldUseCaseImpl.class)
+class HellowordUseCaseImplTest {
 
   @Autowired
-  GreetUseCaseImpl greetUseCase;
+  HelloWorldUseCaseImpl helloWorldUseCaseImpl;
 
   @MockBean
-  RandomIdProvider randomIdProvider;
+  GreetingClient greetingClient;
 
   @Test
-  void givenExistingGreetingWhenGreetThenReturnGreeting() {
-    Greeting valueDefault = new Greeting(1, "Hello World!");
-    given(randomIdProvider.genId()).willReturn(1);
+  void helloworld() {
+    String name = "World";
+    String defaultValue = "Server message: Hello World!";
+    given(greetingClient.greet(name)).willReturn("Hello " + name + "!");
 
-    Greeting greeting = greetUseCase.greet("World");
-    assertThat(valueDefault).usingRecursiveComparison().isEqualTo(greeting);
+    Message message = helloWorldUseCaseImpl.hello(name);
+    assertThat(defaultValue).isEqualTo(message.getMessage());
   }
 }

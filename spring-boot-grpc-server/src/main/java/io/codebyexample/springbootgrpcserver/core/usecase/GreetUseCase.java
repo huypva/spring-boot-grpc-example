@@ -1,4 +1,4 @@
-package io.codebyexample.springbootgrpcclient.core.usecase;
+package io.codebyexample.springbootgrpcserver.core.usecase;
 
 import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
 
@@ -7,5 +7,5 @@ import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
  */
 public interface GreetUseCase {
 
-  Greeting greet(String name);
+  String greet(String name);
 }

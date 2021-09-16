@@ -3,6 +3,7 @@ package io.codebyexample.springbootgrpcclient.core.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author huypva
@@ -10,9 +11,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class Greeting {
+@ToString
+public class Message {
 
-  private int id;
-  private String message;
-
+  String message;
 }

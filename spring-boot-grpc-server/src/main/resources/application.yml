@@ -1,7 +1,8 @@
-server:
-  port : 8082
 spring:
   profiles:
     active: local
   application:
     name: "spring-boot-grpc-server"
+grpc:
+  server:
+    port: 8082

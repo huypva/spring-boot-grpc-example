@@ -5,3 +5,10 @@ spring:
     active: local
   application:
     name: "spring-boot-grpc-client"
+grpc:
+  client:
+    greeting:
+      address: static://localhost:8082
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

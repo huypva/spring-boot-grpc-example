@@ -1,8 +1,5 @@
-package io.codebyexample.springbootgrpcclient.core.usecase;
+package io.codebyexample.springbootgrpcserver.core.usecase;
 
-import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
-import io.codebyexample.springbootgrpcclient.dataprovider.id.IdProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,12 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class GreetUseCaseImpl implements GreetUseCase {
 
-  @Autowired
-  IdProvider idProvider;
-
   @Override
-  public Greeting greet(String name) {
-    int randId = idProvider.genId();
-    return new Greeting(randId, String.format("Hello %s!", name));
+  public String greet(String name) {
+    String message = String.format("Hi %s!", name);
+    return message;
   }
 }

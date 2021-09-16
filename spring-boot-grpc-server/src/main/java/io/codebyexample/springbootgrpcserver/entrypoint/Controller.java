@@ -1,25 +1,32 @@
-package io.codebyexample.springbootgrpcclient.entrypoint;
+package io.codebyexample.springbootgrpcserver.entrypoint;
 
-import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
-import io.codebyexample.springbootgrpcclient.core.usecase.GreetUseCase;
+import io.codebyexample.greeting.grpc.GreetingGrpc;
+import io.codebyexample.greeting.grpc.GreetingRequest;
+import io.codebyexample.greeting.grpc.GreetingResponse;
+import io.codebyexample.springbootgrpcserver.core.usecase.GreetUseCase;
+import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author huypva
  */
-@RestController
-public class Controller {
+@GrpcService
+public class Controller extends GreetingGrpc.GreetingImplBase {
 
   @Autowired
   GreetUseCase greetUseCase;
 
-  @GetMapping("/greet")
-  public Greeting greet(@RequestParam(name = "name") String name) {
-    return greetUseCase.greet(name);
+  @Override
+  public void greet(GreetingRequest request, StreamObserver<GreetingResponse> responseObserver) {
+    String message = greetUseCase.greet(request.getName());
+
+    GreetingResponse reply = GreetingResponse.newBuilder()
+        .setMessage(message)
+        .build();
+
+    responseObserver.onNext(reply);
+    responseObserver.onCompleted();
   }
+
 }

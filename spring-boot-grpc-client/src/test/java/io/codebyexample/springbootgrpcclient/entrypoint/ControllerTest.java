@@ -1,5 +1,6 @@
 package io.codebyexample.springbootgrpcclient.entrypoint;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -7,8 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.codebyexample.springbootgrpcclient.core.entity.Greeting;
-import io.codebyexample.springbootgrpcclient.core.usecase.GreetUseCase;
+import io.codebyexample.springbootgrpcclient.core.usecase.HelloWorldUseCase;
+import io.codebyexample.springbootgrpcclient.core.entity.Message;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,20 +27,20 @@ class ControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  private GreetUseCase greetUseCase;
+  private HelloWorldUseCase helloWorldUseCase;
 
   @Test
   void greet() throws Exception {
-    String api = "/greet?name=World";
-    Greeting greeting = new Greeting(1, "Hello World!");
+    String api = "/hello?name=World";
+    String expectResponse = "Server message: Hello World!";
 
-    given(greetUseCase.greet("World")).willReturn(greeting);
+    given(helloWorldUseCase.hello("World"))
+        .willReturn(new Message("Server message: Hello World!"));
 
     ResultActions resultActions = mockMvc.perform(get(api))
         .andDo(print());
 
     resultActions.andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(greeting.getId())))
-        .andExpect(jsonPath("$.message", is(greeting.getMessage())));
+        .andExpect(jsonPath("$.message", is(expectResponse)));
   }
 }

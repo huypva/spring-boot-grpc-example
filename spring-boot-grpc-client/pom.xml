@@ -16,6 +16,14 @@
 	<name>Grpc Client</name>
 
 	<properties>
+		<com.google.api.grpc.version>1.18.0</com.google.api.grpc.version>
+		<com.google.protobuf.version>3.7.1</com.google.protobuf.version>
+		<grpc.springboot.starter.version>2.12.0.RELEASE</grpc.springboot.starter.version>
+		<io.grpc.version>1.37.0</io.grpc.version>
+
+		<kr.motd.maven.version>1.5.0.Final</kr.motd.maven.version>
+		<org.xolstice.maven.plugins.version>0.6.1</org.xolstice.maven.plugins.version>
+
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -24,6 +32,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!--  grpc-client  -->
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>${grpc.springboot.starter.version}</version>
 		</dependency>
 
 		<!--  lombok  -->
@@ -42,10 +57,42 @@
 	</dependencies>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>${kr.motd.maven.version}</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!--   gRPC compilation   -->
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>${org.xolstice.maven.plugins.version}</version>
+				<configuration>
+					<pluginArtifact>
+						io.grpc:protoc-gen-grpc-java:${io.grpc.version}:exe:${os.detected.classifier}
+					</pluginArtifact>
+					<pluginId>grpc-java</pluginId>
+					<protoSourceRoot>${basedir}/src/main/proto</protoSourceRoot>
+					<protocArtifact>
+						com.google.protobuf:protoc:${com.google.protobuf.version}:exe:${os.detected.classifier}
+					</protocArtifact>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>compile-custom</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
