@@ -64,7 +64,7 @@ docker-compose down
 ## Run testing
 
 ```shell script
-curl http://localhost:8081/greet?name=World
+curl http://localhost:8081/hello?name=World
 ```
 
 
