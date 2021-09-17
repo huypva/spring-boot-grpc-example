@@ -21,11 +21,11 @@ public class Controller extends GreetingGrpc.GreetingImplBase {
   public void greet(GreetingRequest request, StreamObserver<GreetingResponse> responseObserver) {
     String message = greetUseCase.greet(request.getName());
 
-    GreetingResponse reply = GreetingResponse.newBuilder()
+    GreetingResponse response = GreetingResponse.newBuilder()
         .setMessage(message)
         .build();
 
-    responseObserver.onNext(reply);
+    responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
 
