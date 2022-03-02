@@ -53,12 +53,12 @@ $ ./mvnw spring-boot:run
 
 - Start project
 ```shell script
-docker-compose up -d
+$ docker-compose up -d
 ```
 
 - Stop project
 ```shell script
-docker-compose down
+$ docker-compose down
 ```
 
 ## Run testing
@@ -66,7 +66,6 @@ docker-compose down
 ```shell script
 curl -X GET http://localhost:8081/hello?name=World
 ```
-
 
 ## Contribute
 
